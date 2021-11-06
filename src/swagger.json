@@ -1,0 +1,79 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Heat Documentation",
+        "description": "This is an API Heat",
+        "version": "1.0.0",
+        "contact": {
+            "email": "bia_ferreirads@yahoo.com",
+            "github": "Bia-source"
+        }
+    },
+    "paths": {
+        "/authenticate": {
+            "post": {
+                "tags": ["Login"],
+                "summary": "Authenticate in application",
+                "description": "Authenticating user in application",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": { 
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "code": "0156eb555e2ff968017b"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged"
+                    },
+                    "400": {
+                        "description": "Invalid Request"
+                    }
+                }
+            }
+        },
+        "/message": {
+            "post": {
+                "tags": ["Message"],
+                "summary": "Send a message",
+                "description": "Send message to another user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type":"string"
+                                    }
+                                },
+                                "example": {
+                                    "message": "Olá tudo bem?"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type":"object",
+                            "message":  "string"       
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

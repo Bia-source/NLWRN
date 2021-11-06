@@ -4,6 +4,8 @@ import { router } from "./routes/route";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger.json";
 
 const app = express();
 
@@ -20,6 +22,8 @@ const io = new Server(serverHttp, {
 io.on("connection", socket => {
     console.log(`Usuario conectado no socket ${socket.id}`)
 })
+
+app.use("/api-docs-heat", swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 app.use(express.json());
 
