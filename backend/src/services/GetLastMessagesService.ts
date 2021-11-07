@@ -38,9 +38,8 @@ class GetLastMessagesService {
         });
         const result: IReturnGetMessages[] = [];
         messages.map(message => {
-            return result.push({ infoMessage: this.filterMessages(message), userSender: message.user });
+            result.push({ infoMessage: this.filterMessages(message), userSender: message.user });
         })
-        console.log(result);
         return result; 
     }
 
