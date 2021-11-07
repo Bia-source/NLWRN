@@ -1,0 +1,93 @@
+.loginBoxWrapper {
+  height: 70rem;
+  width: 100%;
+  background: #17171a url(../../assets/banner-girl.png) no-repeat center top;
+  padding: 440px 80 40;
+  text-align: center;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  strong {
+      margin-top: 18rem;
+      font-size: 32px;
+      line-height: 36px;
+  }
+  .signInWithGithub{
+      background: #ffcd1e;
+      margin-top: 32px;
+      padding: 0 40px;
+      height: 56px;
+      width: 18rem;
+      color: #09090a;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover{
+          filter: brightness(0.9);
+      }
+
+      svg {
+          margin-right: 16px ;
+      }
+  }
+
+  .signInWithFacebook {
+      background: #4267B2;
+      margin-top: 32px;
+      padding: 0 40px;
+      width: 18rem;
+      height: 56px;
+      color: #09090a;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+          filter: brightness(0.9);
+      }
+
+      svg {
+          margin-right: 10px;
+      }
+    }
+
+    .signInWithInstagram {
+        background:#C13584;
+        margin-top: 32px;
+        padding: 0 40px;
+        width: 18rem;
+        height: 56px;
+        color: #09090a;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
+
+        svg {
+            margin-right: 10px;
+        }
+
+    }
+}
