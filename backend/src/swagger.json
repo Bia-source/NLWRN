@@ -15,6 +15,12 @@
                 "tags": ["Login"],
                 "summary": "Authenticate in application",
                 "description": "Authenticating user in application",
+                "parameters": [{
+                    "name": "code",
+                    "in": "body",
+                    "description": "Código para gerar token",
+                    "required": true
+                }],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -34,7 +40,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Logged"
+                        "description": "Logged",
+                        "content":{
+                            "application/json":{
+                                "example":{
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJGZXJyZWlyaW5oYSIsImF2YXRhcl91cmwiOiJodHRwczovL2F2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvNjA2MTA3MDY_dj00IiwiaWQiOiJiZTFkZTg2NC1iY2RhLTQwYmItYjFmZi0wNmMwNjUzNzkxMTgifSwiaWF0IjoxNjM2MzM2MTIyLCJleHAiOjE2MzY0MjI1MjIsInN1YiI6ImJlMWRlODY0LWJjZGEtNDBiYi1iMWZmLTA2YzA2NTM3OTExOCJ9.aU_Uphvsi_HIY1j3RMW3ZUJPMl5ipEZRkQJTSMuedvo",
+                                    "user": {
+                                        "id": "be1de864-bcda-40bb-b1ff-06c065379118",
+                                        "name": "Ferreirinha",
+                                        "github_id": 60610706,
+                                        "avatar_url": "https://avatars.githubusercontent.com/u/60610706?v=4",
+                                        "login": "Bia-source"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Invalid Request"
@@ -47,6 +67,15 @@
                 "tags": ["Message"],
                 "summary": "Send a message",
                 "description": "Send message to another user",
+                "security": [{ "bearerAuth": [] }],
+                 "parameters": [
+                     {
+                         "name": "message",
+                         "in": "body",
+                         "description": "Mensagem a ser enviada",
+                         "required": true
+                     }
+                 ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -67,13 +96,73 @@
                 "responses": {
                     "200": {
                         "description": "Success",
-                        "schema": {
-                            "type":"object",
-                            "message":  "string"       
+                        "content": {
+                            "application/json": {
+                                "example":{
+                                    "dataSendMessage": {
+                                        "id": "1d22c375-6b08-4f6f-8157-b92cb3c868eb",
+                                        "text": "Olá tudo bem?",
+                                        "create_at": "2021-11-08T01:52:27.911Z",
+                                        "favorite": false,
+                                        "user_id": "be1de864-bcda-40bb-b1ff-06c065379118",
+                                        "user": {
+                                            "id": "be1de864-bcda-40bb-b1ff-06c065379118",
+                                            "name": "Ferreirinha",
+                                            "github_id": 60610706,
+                                            "avatar_url": "https://avatars.githubusercontent.com/u/60610706?v=4",
+                                            "login": "Bia-source"
+                                        }
+                                    }
+                                }
+                            }   
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/last6": {
+            "get": {
+                "tags": ["Message"],
+                "summary": "Busca de mensagens",
+                "description": "Busca inicial das mensagens",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                    "example":{
+                                        "infoMessage": {
+                                                "id": "1d22c375-6b08-4f6f-8157-b92cb3c868eb",
+                                                "text": "Que legal mano",
+                                                "favorite": false,
+                                                "create_at": "2021-11-08T01:52:27.911Z"
+                                            },
+                                         "userSender":{
+                                                "id": "be1de864-bcda-40bb-b1ff-06c065379118",
+                                                "name": "Ferreirinha",
+                                                "github_id": 60610706,
+                                                "avatar_url": "https://avatars.githubusercontent.com/u/60610706?v=4",
+                                                "login": "Bia-source"
+                                         }
+                                    }
+                                
+                                
+                            }
                         }
                     }
                 }
             }
         }
+
+    },
+    "components":{
+        "securitySchemes":{
+            "bearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
     }
+
 }
