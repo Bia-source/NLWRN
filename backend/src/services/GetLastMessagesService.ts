@@ -4,12 +4,14 @@ import prismaClient from "../prisma"
 interface IReturnFilterMessage{
     id: string;
     text: string;
-    create_at: Date
+    favorite?: boolean;
+    create_at: Date;
 }
 
 interface IInfoMessage {
     id: string;
     text: string;
+    favorite?: boolean;
     create_at: Date;
 }
 
@@ -47,6 +49,7 @@ class GetLastMessagesService {
         return {
             id: data.id,
             text: data.text,
+            favorite: data.favorite ? data.favorite : false,
             create_at: data.create_at
         }
     }

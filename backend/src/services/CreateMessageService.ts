@@ -3,11 +3,12 @@ import { io } from "../app";
 import prismaClient from "../prisma"
 
 class CreateMessageService {
-    async execute(text: string,user_id: string): Promise<Message> {
-         const message = await prismaClient.message.create({
+    async execute(text: string,user_id: string): Promise<Message> {    
+        const message = await prismaClient.message.create({
             data: {
                 text,
-                user_id
+                user_id,
+                favorite: false
             },
             include: {
                 user: true
@@ -18,6 +19,7 @@ class CreateMessageService {
              text: message.text,
              user_id: message.user_id,
              created_at: message.create_at,
+             favorite: false,
              user: {
                  name: message.user.name,
                  avatar_url: message.user.avatar_url
