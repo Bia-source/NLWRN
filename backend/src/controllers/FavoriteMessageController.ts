@@ -11,7 +11,9 @@ class FavoriteMessageController{
              newMessage
              });
         } catch (error) {
-            
+            return response.json({
+                messageError: error.message
+            });
         }
     }
 }

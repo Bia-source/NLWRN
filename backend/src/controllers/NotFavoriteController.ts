@@ -5,11 +5,17 @@ import { NotFavoriteService } from "../services/NotFavoriteService";
 class NotFavoriteController {
     async handle(request: Request, response: Response): Promise<Response>{
         const { idMessage } = request.body;
-        const messageService = new NotFavoriteService();
-        const message = await messageService.execute(idMessage);
-        return response.json({
-            message
-        });
+       try {
+            const messageService = new NotFavoriteService();
+            const message = await messageService.execute(idMessage);
+            return response.json({
+               message
+            });
+       } catch (error) {
+            return response.json({
+                messageError: error.message
+            });
+       }
    }
 }
 

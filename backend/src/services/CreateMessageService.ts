@@ -3,8 +3,9 @@ import { io } from "../app";
 import prismaClient from "../prisma"
 
 class CreateMessageService {
-    async execute(text: string,user_id: string): Promise<Message> {    
-        const message = await prismaClient.message.create({
+    async execute(text: string, user_id: string): Promise<Message> {  
+        try {
+            const message = await prismaClient.message.create({
             data: {
                 text,
                 user_id,
@@ -13,9 +14,9 @@ class CreateMessageService {
             include: {
                 user: true
             }
-         });
+            });
         
-         const infoWS = {
+            const infoWS = {
              text: message.text,
              user_id: message.user_id,
              created_at: message.create_at,
@@ -26,10 +27,17 @@ class CreateMessageService {
              }
             }
             
-        io.emit("new_message", infoWS);
+            io.emit("new_message", infoWS);
             
+            return message;
+            
+        } catch (error) {
+            throw new Error("Erro no envio da mensagem, tente novamente mais tarde");
+            
+        }
+        
 
-        return message;
+      
     }
 }
 

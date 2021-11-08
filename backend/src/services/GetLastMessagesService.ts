@@ -29,7 +29,8 @@ interface IReturnGetMessages {
 }
 class GetLastMessagesService {
     async execute(): Promise<IReturnGetMessages[]> {
-        const messages = await prismaClient.message.findMany({
+        try {
+            const messages = await prismaClient.message.findMany({
             take: 6,
             orderBy: {
                 create_at: "desc"
@@ -37,12 +38,16 @@ class GetLastMessagesService {
             include: {
                 user: true
             }
-        });
-        const result: IReturnGetMessages[] = [];
-        messages.map(message => {
-            result.push({ infoMessage: this.filterMessages(message), userSender: message.user });
-        })
-        return result; 
+            });
+            const result: IReturnGetMessages[] = [];
+            messages.map(message => {
+               result.push({ infoMessage: this.filterMessages(message), userSender: message.user });
+            })
+            return result; 
+        } catch (error) {
+            throw new Error("Erro na busca por mensagens");
+            
+        }
     }
 
     private filterMessages(data: Message): IReturnFilterMessage {
