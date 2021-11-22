@@ -19,6 +19,7 @@ Software de envio de mensagens instantâneas utilizando socket.io
 <img height="24em" src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white">
 
 ## Como executar 🚀
+- cd backend
 - yarn install
 - yarn dev
 
