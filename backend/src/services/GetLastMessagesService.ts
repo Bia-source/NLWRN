@@ -8,12 +8,7 @@ interface IReturnFilterMessage{
     create_at: Date;
 }
 
-interface IInfoMessage {
-    id: string;
-    text: string;
-    favorite?: boolean;
-    create_at: Date;
-}
+interface IInfoMessage extends IReturnFilterMessage{}
 
 interface IUserSender {
     id: string;

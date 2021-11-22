@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@prisma/client": "3.3.0",
+    "@types/http-server": "^0.12.1",
     "@types/jest": "^27.0.2",
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "http": "^0.0.1-security",
+    "http-server": "^14.0.0",
     "jsonwebtoken": "^8.5.1",
     "socket.io": "^4.3.1",
     "swagger-ui-express": "^4.1.6"
