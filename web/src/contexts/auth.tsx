@@ -8,14 +8,16 @@ type User = {
     avatar_url: string;
 }
 
-type AuthProvider = {
-    children: ReactNode;
-}
-
 type AuthContextData = {
     user: User | null;
     signInUrl: string;
     signOut: () => void;
+}
+
+export const AuthContext = createContext({} as AuthContextData)
+
+type AuthProvider = {
+    children: ReactNode;
 }
 
 type AuthResponse = {
@@ -28,54 +30,58 @@ type AuthResponse = {
     }
 }
 
-export const AuthContext = createContext({} as AuthContextData);
-
 export function AuthProvider(props: AuthProvider) {
-    const [user, setUser] = useState<User | null>(null);
-    
+    const [user, setUser] = useState<User | null>(null)
+
     const signInUrl = `https://github.com/login/oauth/authorize?scope=user&client_id=748cf7544fe4d50dbc4b`;
-    
-    async function singIn(gitHubCode: string) {
-        const response = await api.post<AuthResponse>('authenticate', { code: gitHubCode });
-        const { token, user } = response.data;
-        localStorage.setItem('@dowhile:token', token);
-        localStorage.setItem('@dowhile:name', user.name);
-        localStorage.setItem('@dowhile:avatar_url', user.avatar_url);
-        localStorage.setItem('@dowhile:login', user.login);
-        setUser(user);
+
+    async function signIn(githubCode: string) {
+        const response = await api.post<AuthResponse>('authenticate', {
+            code: githubCode,
+        })
+
+        const { token, user } = response.data
+
+        localStorage.setItem('@dowhile:token', token)
+
+        api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+        setUser(user)
     }
 
     function signOut() {
-        setUser(null);
-        localStorage.removeItem('@dowhile:token');
+        setUser(null)
+        localStorage.removeItem('@dowhile:token')
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('@dowhile:token');
+        const token = localStorage.getItem('@dowhile:token')
+
         if(token) {
             api.defaults.headers.common.authorization = `Bearer ${token}`;
+
             api.get<User>('profile/user').then(response => {
-                setUser(response.data);
-            });
+                setUser(response.data)
+            })
         }
-    })
+    }, [])
 
     useEffect(() => {
         const url = window.location.href;
-        const hasGitHubCode = url.includes('?code=');
+        const hasGithubCode = url.includes('?code=');
 
-        if(hasGitHubCode) {
-            const [urlWithoutCode, githubCode] = url.split('?code=');
-            // limpando url
+        if(hasGithubCode) {
+            const [urlWithoutCode, githubCode] = url.split('?code=')
+
             window.history.pushState({}, '', urlWithoutCode);
-            singIn(githubCode);
-        }
-    })
 
+            signIn(githubCode)
+        }
+    }, [])
 
     return (
-        <AuthContext.Provider value={{ user, signInUrl, signOut }}>
+        <AuthContext.Provider value={{ signInUrl, user, signOut }}>
             {props.children}
         </AuthContext.Provider>
-    )
+    );
 }

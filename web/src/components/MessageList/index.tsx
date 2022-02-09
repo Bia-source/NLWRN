@@ -24,7 +24,7 @@ export function MessageList() {
     
     useEffect(() => {
         api.get('messages/last6').then(res => {
-            setMessages(res.data.messages);
+            setMessages(res.data.message);
         })
    }, [])
 
